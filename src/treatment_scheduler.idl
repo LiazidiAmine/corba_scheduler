@@ -1,0 +1,19 @@
+module scheduler {
+    struct Request {
+        string object_req_name;
+        string interface_req_name;
+        string op_req;
+        sequence<any> req_params;
+    };
+
+    exception invalid_req {
+        string error_msg;
+    };
+
+    interface Scheduler {
+        Request get(in short index);
+        boolean post(in Request req);
+        void del(in short index);
+        boolean check_req(in Request req) raises(invalid_req);
+    };
+};

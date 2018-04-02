@@ -1,0 +1,33 @@
+module Calculator{
+    interface Calc{
+        float sum(in float x, in float y);
+        float rest(in float x, in float y);
+        float multi(in float x, in float y);
+        float div(in float x, in float y);
+        oneway void stop();
+    };
+
+    struct Request {
+        string request_object_name;
+        string interface_request_name;
+        string operation_name;
+        string result;
+        long request_number;
+        sequence<any> operation_params;
+    };
+
+    exception Invalid_req {
+        string error_msg;
+    };
+
+    interface Scheduler {
+        boolean post(in Request req, in long num_client);
+        void del(in long request_id, in long num_client);
+        boolean check_req(in Request req) raises(Invalid_req);
+    };
+
+    interface Client {
+        string callback(in string result, in long request_id);
+    };
+
+};
